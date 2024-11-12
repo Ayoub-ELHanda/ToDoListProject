@@ -7,7 +7,7 @@ const user = {
   firstname: 'ayoub',
   lastname: 'elhanda',
   password: 'test1213',
-  birthdate: '2000-01-16'
+  birthdate: '2000-01-16',
 };
 
 if (UserValidator.isValid(user)) {
@@ -18,19 +18,13 @@ if (UserValidator.isValid(user)) {
       const item = {
         name: `Item ${i + 1}`,
         content: 'Contenu de l\'item',
-        creationDate: new Date().toISOString()
+        creationDate: new Date().toISOString(),
       };
-      todoList.add(item);
+      todoList.add(item); // Add item and automatically save it
       console.log(`Item ${i + 1} ajouté avec succès`);
     }
   } catch (error) {
-    console.error(error.message);
-  }
-
-  try {
-    todoList.save();
-  } catch (error) {
-    console.error('Erreur dans la méthode save: ' + error.message);
+    console.error('Erreur lors de l\'ajout de l\'item:', error.message);
   }
 } else {
   console.log('L\'utilisateur n\'est pas valide');

@@ -1,7 +1,6 @@
 class EmailSenderService {
-    static sendEmail(email, subject) {
-      // Mocked method for sending email
-      console.log(`Email sent to ${email} with subject: ${subject}`);
+    static sendEmail(email, message) {
+      console.log(`Sending email to ${email}: ${message}`);
     }
   }
   

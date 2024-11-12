@@ -1,14 +1,16 @@
 class UserValidator {
     static isValid(user) {
-      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,40}$/;
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/;
+      const age = new Date().getFullYear() - new Date(user.birthdate).getFullYear();
   
-      const isEmailValid = emailPattern.test(user.email);
-      const isNameValid = user.firstname && user.lastname;
-      const isPasswordValid = passwordPattern.test(user.password);
-      const isOldEnough = new Date().getFullYear() - new Date(user.birthdate).getFullYear() >= 13;
-  
-      return isEmailValid && isNameValid && isPasswordValid && isOldEnough;
+      return (
+        emailRegex.test(user.email) &&
+        user.firstname &&
+        user.lastname &&
+        passwordRegex.test(user.password) &&
+        age >= 13
+      );
     }
   }
   
