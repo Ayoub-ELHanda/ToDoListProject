@@ -1,0 +1,14 @@
+{
+    "name": "todo-list-project",
+    "version": "1.0.0",
+    "description": "A simple ToDo list application with user validation and email notification.",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
+    },
+    "author": "Votre Nom",
+    "license": "MIT"
+}
