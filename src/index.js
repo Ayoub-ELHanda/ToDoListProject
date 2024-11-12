@@ -6,8 +6,8 @@ const user = {
   email: 'elhandaayo@gmail.com',
   firstname: 'ayoub',
   lastname: 'elhanda',
-  password: 'test1213',
-  birthdate: '2000-01-16',
+  password: 'Test1213',  // Updated password
+  birthdate: '2000-01-16'
 };
 
 if (UserValidator.isValid(user)) {
@@ -20,7 +20,7 @@ if (UserValidator.isValid(user)) {
         content: 'Contenu de l\'item',
         creationDate: new Date().toISOString(),
       };
-      todoList.add(item); // Add item and automatically save it
+      todoList.add(item);
       console.log(`Item ${i + 1} ajouté avec succès`);
     }
   } catch (error) {

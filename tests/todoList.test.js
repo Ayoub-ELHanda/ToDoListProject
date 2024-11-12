@@ -28,11 +28,16 @@ describe('ToDoList Tests', () => {
     todoList = new ToDoList(user);
   });
 
-  const createItem = (index) => ({
-    name: `Item ${index + 1}`,
-    content: 'Contenu de l\'item',
-    creationDate: new Date(new Date().getTime() + index * 30 * 60000).toISOString(),
-  });
+  const createItem = (index) => {
+    const baseTime = new Date().getTime() + index * 30 * 60000; // Adjusted time
+    return {
+      name: `Item ${index + 1}`,
+      content: 'Contenu de l\'item',
+      creationDate: new Date(baseTime).toISOString(),
+    };
+  };
+  
+  
 
   test('should validate a user correctly', () => {
     expect(UserValidator.isValid(user)).toBe(true);

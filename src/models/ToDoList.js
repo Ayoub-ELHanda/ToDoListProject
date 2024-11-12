@@ -20,12 +20,13 @@ class ToDoList {
     if (this.items.length > 0) {
       const lastItemDate = new Date(this.items[this.items.length - 1].creationDate);
       const newItemDate = new Date(item.creationDate);
-      const timeDiff = (newItemDate - lastItemDate) / 60000;
-
+      const timeDiff = (newItemDate - lastItemDate) / 60000; // Difference in minutes
+    
       if (timeDiff < 30) {
         throw new Error('Il doit y avoir une période de 30 minutes entre deux items');
       }
     }
+    
 
     this.items.push(item);
 
@@ -40,35 +41,38 @@ class ToDoList {
 
   save(item) {
     const filePath = path.join(__dirname, 'todoList.json');
-
-    // Initialiser la structure de todoLists avec un tableau vide si le fichier n'existe pas ou est vide
     let todoLists = [];
-    if (fs.existsSync(filePath)) {
-      const fileData = fs.readFileSync(filePath, 'utf-8');
-      if (fileData) {
-        try {
-          todoLists = JSON.parse(fileData);
-        } catch (error) {
-          console.error("Erreur de parsing du fichier JSON", error);
-          todoLists = [];
+  
+    try {
+      // Check if the file exists and read its contents
+      if (fs.existsSync(filePath)) {
+        const fileData = fs.readFileSync(filePath, 'utf-8');
+        if (fileData) {
+          try {
+            todoLists = JSON.parse(fileData);
+          } catch (error) {
+            console.error("Erreur de parsing du fichier JSON", error);
+            todoLists = [];
+          }
         }
       }
+  
+      // Check if the user is already in the list
+      const userIndex = todoLists.findIndex(entry => entry.user.email === this.user.email);
+  
+      if (userIndex === -1) {
+        todoLists.push({ user: this.user, items: [item] });
+      } else {
+        todoLists[userIndex].items.push(item);
+      }
+  
+      // Write the updated data to the file
+      fs.writeFileSync(filePath, JSON.stringify(todoLists, null, 2), 'utf-8');
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde dans le fichier:', error.message);
     }
-
-    // Vérifie si l'utilisateur existe déjà dans la liste, sinon on le crée
-    const userIndex = todoLists.findIndex(entry => entry.user.email === this.user.email);
-
-    if (userIndex === -1) {
-      // Si l'utilisateur n'existe pas, on le rajoute avec la première tâche
-      todoLists.push({ user: this.user, items: [item] });
-    } else {
-      // Si l'utilisateur existe, on ajoute la tâche à sa liste d'éléments
-      todoLists[userIndex].items.push(item);
-    }
-
-    // Sauvegarder les données modifiées dans le fichier JSON
-    fs.writeFileSync(filePath, JSON.stringify(todoLists, null, 2), 'utf-8');
   }
+  
 }
 
 module.exports = ToDoList;
